@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerCam_ : MonoBehaviour
+{
+    public float sensX;
+    public float sensY;
+
+    public Transform orientation;
+
+    
+    public float xRotation;
+	public float yRotation;
+    public float zRotation;
+
+    public Transform head;
+
+    private void Start()
+    {
+        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void Update()
+    {
+        // get mouse input
+        float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
+        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
+
+        yRotation += mouseX;
+        xRotation -= mouseY;
+		
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+
+
+        // rotate cam and orientation
+
+        transform.localEulerAngles = new Vector3(xRotation, yRotation, zRotation);
+        orientation.rotation = Quaternion.Euler(0, yRotation, zRotation);
+
+        transform.position = head.transform.position;
+
+    }
+}
