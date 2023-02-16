@@ -1,0 +1,200 @@
+using UnityEngine;
+
+public class QE_Tilt : MonoBehaviour
+{
+    public GameObject mainBody;
+    public PlayerCam_ playerCam_;
+    private float x, y, z;
+    private Vector3 bodyRot;
+    public int normalTiltSpeed;
+    public int fastlTiltSpeed;
+    public int returnSpeed;
+    public float modificatorSpeedTilitNormal;
+    public float modificatorSpeedTilitFast;
+   
+
+    float timeToActivte = 0;
+    public bool isDobuleButton,isTimer;
+   public bool isReturn;
+
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        x = mainBody.transform.rotation.x;
+        y = playerCam_.transform.eulerAngles.y;
+        z = mainBody.transform.eulerAngles.z;
+
+
+
+
+        bodyRot = new Vector3(x, y, z);
+        mainBody.transform.localEulerAngles = new Vector3(bodyRot.x, bodyRot.y, bodyRot.z);
+
+
+        playerCam_.zRotation = z;
+
+
+
+        if (!isReturn)
+        {
+            NormalTilt();
+            DobuleButton();
+            FastTilt();
+        }
+       
+
+        if (Input.GetKey(KeyCode.Q) && Input.GetKey(KeyCode.E))
+        {
+            
+            ReturnNormalPos();
+
+        }
+        if (isReturn)
+        {
+            timeToActivte += Time.deltaTime;
+            if (timeToActivte > 0.3f)
+            {
+                isReturn = false;
+                timeToActivte = 0;
+            }
+            
+        }
+
+
+        if (z > 30 && z < 60)
+        {
+            mainBody.transform.localEulerAngles = new Vector3(x, y, 30);
+        }
+
+        if (z < 330 && z > 60)
+        {
+            mainBody.transform.localEulerAngles = new Vector3(x, y, -30);
+        }
+
+    }
+
+
+    void NormalTilt()
+    {
+      
+        if (!isDobuleButton)
+        {
+
+            if (Input.GetKey(KeyCode.Q))
+            {
+            
+                NormalTiltLeft(false);
+
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+             
+                NormalTiltLeft(true);
+
+            }
+        }
+    }
+
+    void FastTilt()
+    {
+        if (isDobuleButton)
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                FastTiltLeft(false);
+
+
+            }
+            else if (Input.GetKeyUp(KeyCode.Q))
+            {
+                isDobuleButton = false;
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                FastTiltLeft(true);
+                
+
+            }
+            else if (Input.GetKeyUp(KeyCode.E))
+            {
+                isDobuleButton = false;
+            }
+
+        }
+
+    }
+
+
+
+    void DobuleButton()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.Q) | Input.GetKeyDown(KeyCode.E))
+        {
+            isTimer = true;
+            if (timeToActivte > 0.1f && Input.GetKeyDown(KeyCode.Q) | Input.GetKeyDown(KeyCode.E))
+            {
+                isDobuleButton = true;
+            }
+        }
+
+        if (isTimer)
+        {
+            timeToActivte += Time.deltaTime;
+            if (timeToActivte > 0.3f)
+            {
+                isTimer = false;
+                timeToActivte = 0;
+            }
+
+        }
+
+
+    }
+
+    void NormalTiltLeft(bool left)
+    {
+       
+        if (left)
+        {
+            z = z - normalTiltSpeed * Time.deltaTime* modificatorSpeedTilitNormal;
+            mainBody.transform.localEulerAngles = new Vector3(x, y, z);
+        }
+        else
+        {
+            z = z + normalTiltSpeed * Time.deltaTime* modificatorSpeedTilitNormal;
+            mainBody.transform.localEulerAngles = new Vector3(x, y, z);
+        }
+        
+    }
+
+    void FastTiltLeft(bool left)
+    {
+
+        if (left)
+        {
+            z = z - fastlTiltSpeed * Time.deltaTime * modificatorSpeedTilitFast;
+            mainBody.transform.localEulerAngles = new Vector3(x, y, z);
+
+        }
+        else
+        {
+            z = z + fastlTiltSpeed * Time.deltaTime * modificatorSpeedTilitFast;
+            mainBody.transform.localEulerAngles = new Vector3(x, y, z);
+        }
+
+    }
+
+    void ReturnNormalPos()
+    {
+
+        mainBody.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(x, y, 0), Time.deltaTime * returnSpeed);
+        isReturn = true;
+
+
+    }
+
+
+}
