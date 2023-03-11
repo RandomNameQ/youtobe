@@ -112,7 +112,7 @@ using UnityEngine;
 
         public void ShowComponentData()
         {
-            // читаем поля для вывода инфы
+            // С‡РёС‚Р°РµРј РїРѕР»СЏ РґР»СЏ РІС‹РІРѕРґР° РёРЅС„С‹
 
             List<string> fieldsNameAndDigit = new List<string>();
 
@@ -138,7 +138,7 @@ using UnityEngine;
 
         public void UpdateFieldFromGeneratedMods(List<ModifierGenerator.Mod> generatedMods)
         {
-            // обновляем поля потомков на полученный аргумент
+            // РѕР±РЅРѕРІР»СЏРµРј РїРѕР»СЏ РїРѕС‚РѕРјРєРѕРІ РЅР° РїРѕР»СѓС‡РµРЅРЅС‹Р№ Р°СЂРіСѓРјРµРЅС‚
 
             FieldInfo[] fields = GetType().GetFields(BindingFlags.Public | BindingFlags.Instance);
 

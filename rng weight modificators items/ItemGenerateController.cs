@@ -6,7 +6,7 @@ using UnityEngine.UI;
     public class ItemGenerateController : MonoBehaviour
     {
     private List<ItemBase> _mobLoot = new();
-        [SerializeField]
+    [SerializeField]
         private List<GameObject> listIdealObject = new();
 
         private ModifierGenerator _modifierGenerator;
@@ -56,7 +56,7 @@ using UnityEngine.UI;
             loot.GetComponent<BoxCollider>().isTrigger = true;
 
 
-            //��������� ����� ������ � ��� ��� ����������������� �� ���������
+            //продумать босов уников и етк шоб машстрабировалось от сложности
             var countItems = Random.Range(0, 10);
 
             for (int i = 0; i < 20; i++)
@@ -71,7 +71,7 @@ using UnityEngine.UI;
 
                 item.transform.SetParent(loot.transform);
 
-                // ���������� ������ � ������ ��� �������� ���� ����
+                // Добавление итемов в канвас при открытие окно лута
 
 
 
