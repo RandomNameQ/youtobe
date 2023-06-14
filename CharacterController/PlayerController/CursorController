@@ -1,0 +1,61 @@
+using UnityEngine;
+
+public class CursorController : MonoBehaviour
+{
+    private SpriteRenderer _renderer;
+    private Animator _animator;
+
+    [SerializeField] private Texture2D[] _cursorTextures;
+    [SerializeField] private int _frameCount;
+    [SerializeReference] private int frameRate;
+    
+private int currentFrame;
+private float frameTimer;
+
+
+    private Transform _defaultRotation;
+
+    public enum CursorState
+    {
+        Normal,
+        Activated,
+        Default
+    }
+
+    public CursorState currentCursorState = CursorState.Normal;
+
+    private void Awake()
+    {
+        _animator = GetComponent<Animator>();
+        _renderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        Cursor.SetCursor(_cursorTextures[0], Vector2.zero, CursorMode.Auto);
+    }
+
+    private void Update()
+{
+    if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.W))
+    {
+        currentCursorState = CursorState.Activated;
+    }
+    if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
+    {
+        currentCursorState = CursorState.Normal;
+    }
+
+    Vector2 hotspot = new Vector2(_cursorTextures[1].width / 2, _cursorTextures[1].height / 2);
+
+    switch (currentCursorState)
+    {
+        case CursorState.Normal:
+            Cursor.SetCursor(_cursorTextures[0],Vector2.zero, CursorMode.Auto);
+            break;
+        case CursorState.Activated:
+            Cursor.SetCursor(_cursorTextures[1], hotspot, CursorMode.Auto);
+            break;
+    }
+}
+}
