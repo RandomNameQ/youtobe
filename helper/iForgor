@@ -1,0 +1,4 @@
+// get random enum
+protected GhostState _ghostState;
+public enum GhostState { Chill, Chase, WalkInRoom, ChangeRoom, PhysicalGhostEvent, NonPhysGhostEvent, FindPlayer, HuntPlayer }
+_ghostState = (GhostState)UnityEngine.Random.Range(0, (int)Enum.GetValues(typeof(GhostState)).Cast<GhostState>().Last() + 1);
