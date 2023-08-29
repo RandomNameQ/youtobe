@@ -8,3 +8,13 @@ _ghostState = (GhostState)UnityEngine.Random.Range(0, (int)Enum.GetValues(typeof
         {
           
         }
+// check if flag enum have some enum
+if (_ghost.Evidence.HasFlag(EvidanceData.Evidence.Temperature))
+        {
+            Debug.Log("asd");
+        }
+
+if (enumVariable.HasFlag(ENUMTYPE.Temperature))
+        {
+            Debug.Log("asd");
+        }
